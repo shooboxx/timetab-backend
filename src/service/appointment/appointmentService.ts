@@ -1,11 +1,18 @@
 import { CreateAppointment } from "@timetab/service/appointment/appointmentTypes"
-import { AppointmentRepo } from "@timetab/service/appointment/appointmentRepo"
-import { AppointmentStatus } from "@timetab/service/appointment/appointmentConst"
-import { PaymentService } from "@timetab/service/appointment/payment/paymentService"
+import { AppointmentRepo } from "./appointmentRepo"
+import { AppointmentStatus } from "./appointmentConst"
+import { PaymentService } from "../appointment/payment/paymentService"
 import { ClientService } from "./client/clientService"
+import  contextTime  from "./../../../util/contextTime.js"
+
 
 const getAppointmentDetails = async (emailAddress: string, phoneContact : string, storeId: number) => {
     return await AppointmentRepo.findAppointmentDetails(emailAddress.trim().toLowerCase(), phoneContact, storeId)
+}
+const testDate = () => {
+    const yesterday = new Date(2021, 6, 27, 10, 30)
+    console.log(contextTime(yesterday))
+    return
 }
 
 const _getAppointmentDetailsById = async (appointmentId : number) => {
@@ -16,7 +23,7 @@ const createAppointment = async (bookingRequest: CreateAppointment) => {
     //TODO: Get available timeslots
     const client = await ClientService.createClientDetails(bookingRequest.client)
     //TODO: Add client details to bookingRequest
-    
+
 
     return ''
 
@@ -44,4 +51,5 @@ const updateAppointmentStatus = async (appointmentId : number, status : string) 
 }
 export const AppointmentService = {
     getAppointmentDetails,
+    testDate
 }
